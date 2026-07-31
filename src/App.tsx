@@ -1,5 +1,7 @@
-export default function App() {
+import NutritionCalculator from "./components/NutritionCalculator/NutritionCalculator";
+
+export default function App(): React.JSX.Element {
     return (
-        <h1>Nutrition Calculator</h1>
+        <NutritionCalculator/>
     );
 }

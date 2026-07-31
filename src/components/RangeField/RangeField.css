@@ -1,0 +1,35 @@
+.range-field {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 48px;
+    border: 1px solid black;
+    border-radius: 16px;
+}
+
+.range-field__label {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    height: 48px;
+    width: 80px;
+    padding-left: 16px;
+}
+
+.range-field__slider {
+    width: 400px;
+}
+
+.range-field__result {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 4px;
+    height: 48px;
+    width: 110px;
+    padding-left: 16px;
+}
+
+.range-field__number-input {
+    width: 30px;
+}
