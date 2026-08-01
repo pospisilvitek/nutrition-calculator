@@ -2,6 +2,8 @@ import { useState } from "react";
 import RangeField from "../RangeField/RangeField";
 import "./NutritionCalculator.css";
 
+import { WEIGHT_FIELD, HEIGHT_FIELD, AGE_FIELD } from "../../constants/nutritionCalculatorConstants";
+
 interface UserMeasurements {
     weight: number;
     height: number;
@@ -10,13 +12,12 @@ interface UserMeasurements {
 
 export default function NutritionCalculator(): React.JSX.Element {
     const [values, setValues] = useState<UserMeasurements>({
-        weight: 75,
-        height: 175,
-        age: 30
+        weight: WEIGHT_FIELD.defaultValue,
+        height: HEIGHT_FIELD.defaultValue,
+        age: AGE_FIELD.defaultValue
     });
 
     const handleValueChange = (id: string, value: number): void => {
-        // "id" matches a RangeField's "id" prop (e.g. "weight")
         setValues((previous) => ({ ...previous, [id]: value }));
     };
     
@@ -24,29 +25,29 @@ export default function NutritionCalculator(): React.JSX.Element {
         <div className="nutrition-calculator">
             <h1>Nutrition Calculator - BMR/BMI</h1>
             <RangeField 
-                id="weight" 
-                label="Weight"
-                unit="kg"
-                min={40}
-                max={200}
+                id={WEIGHT_FIELD.id}
+                label={WEIGHT_FIELD.label}
+                unit={WEIGHT_FIELD.unit}
+                min={WEIGHT_FIELD.min}
+                max={WEIGHT_FIELD.max}
                 value={values.weight}
                 onValueChange={handleValueChange}
             />
             <RangeField 
-                id="height" 
-                label="Height"
-                unit="cm"
-                min={100}
-                max={220}
+                id={HEIGHT_FIELD.id}
+                label={HEIGHT_FIELD.label}
+                unit={HEIGHT_FIELD.unit}
+                min={HEIGHT_FIELD.min}
+                max={HEIGHT_FIELD.max}
                 value={values.height}
                 onValueChange={handleValueChange}
             />
             <RangeField 
-                id="age" 
-                label="Age"
-                unit="years"
-                min={18}
-                max={100}
+                id={AGE_FIELD.id} 
+                label={AGE_FIELD.label}
+                unit={AGE_FIELD.unit}
+                min={AGE_FIELD.min}
+                max={AGE_FIELD.max}
                 value={values.age}
                 onValueChange={handleValueChange}
             />
