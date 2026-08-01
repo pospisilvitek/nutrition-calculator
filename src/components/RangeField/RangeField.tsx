@@ -4,62 +4,63 @@ import "./RangeField.css";
 interface RangeFieldProps {
     id: string;
     label: string;
-    defaultValue: number;
     unit: string; 
     min: number;
     max: number;
+    value: number;
+    onValueChange: (id: string, value: number) => void;
 }
 
 export default function RangeField({
     id,
     label,
-    defaultValue,
     unit,
     min,
-    max
+    max,
+    value,
+    onValueChange
 }: RangeFieldProps): React.JSX.Element {
-    const [value, setValue] = useState<number>(defaultValue);
-    const [numberInput, setNumberInput] = useState<number | "">(defaultValue);
+    const [numberInputValue, setNumberInputValue] = useState<number | "">(value);
 
-    const handleNumberChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
+    const handleNumberInputChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
         const rawValue: string = event.target.value;
         
         if (rawValue === "") {
-            setNumberInput("");
+            setNumberInputValue("");
             return;
-        } 
+        }
         
         if (!/^\d+$/.test(rawValue)) return;
         
         const numericValue: number = Number(event.target.value);
 
         if (numericValue >= max) {
-            setValue(max);
-            setNumberInput(max);
+            setNumberInputValue(max);
+            onValueChange(id, max);
             return;
         } 
         
-        setValue(numericValue);
-        setNumberInput(numericValue);
+        setNumberInputValue(numericValue);
+        onValueChange(id, numericValue);
     };
 
-    const handleRangeChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
+    const handleRangeInputChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
         const numericValue: number = Number(event.target.value);
 
-        setValue(numericValue);
-        setNumberInput(numericValue);
+        setNumberInputValue(numericValue);
+        onValueChange(id, numericValue);
     };
 
-    const handleNumberBlur = (): void => {
-        if (numberInput === "") {
-            setValue(min);
-            setNumberInput(min);
+    const handleNumberInputBlur = (): void => {
+        if (numberInputValue === "") {
+            setNumberInputValue(min);
+            onValueChange(id, min);
             return;
         }
 
         if (value < min) {
-            setValue(min);
-            setNumberInput(min);
+            setNumberInputValue(min);
+            onValueChange(id, min);
         }
     };
 
@@ -73,14 +74,13 @@ export default function RangeField({
             </label>
             <input 
                 id={id}
-                name={id}
                 className="range-field__slider"
                 type="range" 
                 min={min}
                 max={max}
                 step={1}
                 value={value}
-                onChange={handleRangeChange}
+                onChange={handleRangeInputChange}
             />
             <div className="range-field__result">
                 <input 
@@ -88,9 +88,9 @@ export default function RangeField({
                     type="text"
                     inputMode="numeric"
                     pattern="[0-9]*"
-                    value={numberInput}
-                    onChange={handleNumberChange}
-                    onBlur={handleNumberBlur}
+                    value={numberInputValue}
+                    onChange={handleNumberInputChange}
+                    onBlur={handleNumberInputBlur}
                 />
                 <span className="range-field__unit">{unit}</span>
             </div>
