@@ -21,13 +21,19 @@ export default function NutritionCalculator(): React.JSX.Element {
         setValues((previous) => ({ ...previous, [id]: value }));
     };
 
+    const formatBmi = (bmi: number): string => {
+        if (bmi < 15) return "<15";
+        if (bmi > 40) return ">40";
+        return bmi.toFixed(1);
+    };
+
     const bmr: number = Math.round(
         10 * values.weight + 6.25 * values.height - 5 * values.age + 5
     );
 
     const heightInMeters: number = values.height / 100;
     const bmi: number = values.weight / (heightInMeters * heightInMeters);
-    const bmiDisplay: string = bmi.toFixed(1);
+    const bmiDisplay: string = formatBmi(bmi);
     
     return (
         <div className="nutrition-calculator">

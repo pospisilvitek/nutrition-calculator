@@ -36,12 +36,10 @@ export default function RangeField({
 
         if (numericValue >= max) {
             setNumberInputValue(max);
-            onValueChange(id, max);
             return;
         } 
         
         setNumberInputValue(numericValue);
-        onValueChange(id, numericValue);
     };
 
     const handleRangeInputChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
@@ -53,14 +51,22 @@ export default function RangeField({
 
     const handleNumberInputBlur = (): void => {
         if (numberInputValue === "") {
+            setNumberInputValue(value);
+            return;
+        }
+
+        if (numberInputValue < min) {
             setNumberInputValue(min);
             onValueChange(id, min);
             return;
         }
 
-        if (value < min) {
-            setNumberInputValue(min);
-            onValueChange(id, min);
+        onValueChange(id, numberInputValue);
+    };
+
+    const handleNumberInputKeyDown = (event: React.KeyboardEvent<HTMLInputElement>): void => {
+        if (event.key === "Enter") {
+            event.currentTarget.blur();
         }
     };
 
@@ -91,6 +97,7 @@ export default function RangeField({
                     value={numberInputValue}
                     onChange={handleNumberInputChange}
                     onBlur={handleNumberInputBlur}
+                    onKeyDown={handleNumberInputKeyDown}
                 />
                 <span className="range-field__unit">{unit}</span>
             </div>
