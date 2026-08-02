@@ -21,19 +21,30 @@ export default function NutritionCalculator(): React.JSX.Element {
         setValues((previous) => ({ ...previous, [id]: value }));
     };
 
-    const formatBmi = (bmi: number): string => {
-        if (bmi < 15) return "<15";
-        if (bmi > 40) return ">40";
-        return bmi.toFixed(1);
-    };
-
     const bmr: number = Math.round(
         10 * values.weight + 6.25 * values.height - 5 * values.age + 5
     );
 
+    const formatBmi = (bmi: number): string => {
+        if (bmi < 18.5) return "<18.5";
+        if (bmi > 40) return ">40.0";
+        return bmi.toFixed(1);
+    };
+
+    const getBmiCategory = (bmi: number): string => {
+        if (bmi < 18.5) return "Underweight";
+        if (bmi < 25) return "Normal weight";
+        if (bmi < 30) return "Overweight";
+        if (bmi < 35) return "Obesity I.";
+        if (bmi < 40) return "Obesity II.";
+        return "Obesity III.";
+    };
+
     const heightInMeters: number = values.height / 100;
     const bmi: number = values.weight / (heightInMeters * heightInMeters);
+
     const bmiDisplay: string = formatBmi(bmi);
+    const bmiCategory: string = getBmiCategory(bmi);
     
     return (
         <div className="nutrition-calculator">
@@ -66,17 +77,18 @@ export default function NutritionCalculator(): React.JSX.Element {
                 onValueChange={handleValueChange}
             />
             <div className="nutrition-calculator__results">
-                <div className="result">
-                    <p className="result__label">BMR:</p>
-                    <div className="result__value-wrapper">
-                        <p className="result__value">{bmr}</p>
-                        <p className="result__unit">kcal/day</p>
+                <div className="bmi-result">
+                    <p>BMI:</p>
+                    <div className="bmi-result__value-wrapper">
+                        <p className="bmi-result__value">{bmiDisplay}</p>
                     </div>
+                    <p>Your weight category: {bmiCategory}</p> 
                 </div>
-                <div className="result">
-                    <p className="result__label">BMI:</p>
-                    <div className="result__value-wrapper">
-                        <p className="result__value">{bmiDisplay}</p>
+                <div className="bmr-result">
+                    <p>BMR:</p>
+                    <div className="bmr-result__value-wrapper">
+                        <p className="bmr-result__value">{bmr}</p>
+                        <p>kcal/day</p>
                     </div>
                 </div>
             </div>

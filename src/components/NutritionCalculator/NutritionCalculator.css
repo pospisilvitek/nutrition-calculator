@@ -9,32 +9,33 @@
     width: 100%;
     display: flex;
     justify-content: space-between;
-    align-items: center;
     height: 48px;
 }
 
-.result {
+.bmi-result,
+.bmr-result {
     display: flex;
     align-items: center;
     gap: 8px;
 }
 
-.result__value-wrapper {
+.bmi-result__value-wrapper,
+.bmr-result__value-wrapper {
     display: flex;
     align-items: center;
-    gap: 4px;
     height: 48px;
     padding: 0 8px;
     border: 1px solid black;
-    border-radius: 8px;
+    border-radius: 16px;
 }
 
-.result__value {
+.bmr-result__value-wrapper {
+    gap: 4px;
+}
+
+.bmi-result__value,
+.bmr-result__value {
+    width: 38px;
+    text-align: center;
     font-variant-numeric: tabular-nums;
-    text-align: center;
-    width: 36px;
-}
-
-.result__unit {
-    text-align: center;
-}
+} 
